@@ -1,0 +1,19 @@
+{
+    "command": {
+      "version": {
+        "allowBranch": "main",
+        "conventionalCommits": true,
+        "createRelease": "github",
+        "ignoreChanges": ["**/test/**, **/*.spec.*"],
+        "message": "chore(release): publish [skip ci]"
+      },
+      "publish": {
+        "conventionalCommits": true,
+        "message": "chore(release): publish [skip ci]",
+        "registry": "https://npm.pkg.github.com"
+      }
+    },
+    "granularPathspec": false,
+    "version": "independent",
+    "$schema": "node_modules/lerna/schemas/lerna-schema.json"
+  }

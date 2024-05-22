@@ -21,7 +21,7 @@
 
 ## Lerna
 
-* [Lerna example]()
+* [Lerna example](https://github.com/fall-development-rob/github_actions/blob/master/lerna-example.json)
 
 ## Templates
 
