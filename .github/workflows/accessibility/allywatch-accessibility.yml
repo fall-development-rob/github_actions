@@ -1,0 +1,35 @@
+name: Allywatch accessibility reports
+
+on:
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '2 2 * * SAT'
+
+jobs:
+  a11ywatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "a11ywatch a website front page"
+        uses: a11ywatch/github-action@v2.1.7
+        id: scan_front
+        with:
+          WEBSITE_URL: # Your website URL
+          SITE_WIDE: false  # Do not spider the site
+          FAIL_ERRORS_COUNT: 100
+          LIST: true # Create a report
+          UPLOAD: true  # save results as an action artifacts
+        env:
+          DEFAULT_RUNNERS: htmlcs
+          PAGEMIND_IGNORE_WARNINGS: true
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "Audit Results" # See https://github.com/a11ywatch/github-actions
+
+      - name: "Display Results"
+        run: |
+          echo Total Issues ${{ steps.scan_front.outputs.issues }}
+          score=`cat results.json | jq ".data.issuesInfo.accessScore"`
+          echo "website accessibility score $score"
+          echo Results ${{ steps.scan_front.outputs.results }}
+          echo JSON `cat results.json`
