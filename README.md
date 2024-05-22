@@ -1,1 +1,7 @@
-# A set of useful github workflows
+# Examples of how to use Github
+
+## Actions
+
+## Dependabot
+
+## Pull Request Templates 
