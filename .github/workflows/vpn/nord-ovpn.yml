@@ -1,0 +1,38 @@
+name: Connect to Organization's Gateway using OpenVPN
+
+# on: 
+#     - workflow_dispatch
+
+jobs:
+  connect:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install OpenVPN
+      run: |
+        sudo apt update
+        sudo apt install -y openvpn openvpn-systemd-resolved
+
+    - name: Download OVPN Config
+      run: |
+        echo "${{ vars.NORDVPN_OVPNCONFIG }}" > .github/workflows/nordlayer.ovpn
+
+    - name: Connect to VPN
+      uses: "kota65535/github-openvpn-connect-action@v2"
+      with:
+          config_file: .github/workflows/nordlayer.ovpn
+          username: ${{ secrets.NORDVPN_USERNAME }}
+          password: ${{ secrets.NORDVPN_PASSWORD }}
+          tls_auth_key: ${{ secrets.NORDVPN_TLSAUTHKEY }}
+
+    - name: Get Github action IP
+      id: ip
+      uses: haythem/public-ip@v1.3
+
+    - name: Print Public IP
+      run: |
+        echo ${{ steps.ip.outputs.ipv4 }}
+        echo ${{ steps.ip.outputs.ipv6 }}
